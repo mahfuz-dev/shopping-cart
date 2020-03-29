@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button class="btn btn-default" id="minus1"><i class="fas fa-minus"></i></button>
+                           <input type="text" class="form-control text-center" value="1" id="valueChanger1" >
+                           <button class="btn btn-default" id="plus1"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$ <span id="getPrice1">  1219 </span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button class="btn btn-default" id="minus2Btn"><i class="fas fa-minus"></i></button>
+                           <input type="text" class="form-control text-center" id="valueChanger2" value="1">
+                           <button class="btn btn-default" id="plus2Btn"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$<span id="getPrice2">59</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$ <span id="subtotal">1,278</span></h5>
+                        <h5>$0</h5>
+                        <h5>$ <span id="total">1,278</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <script>
+      //iPhone mobile handler
+      var plus1Btn = document.querySelector("#plus1");
+      var getPrice1 = parseFloat(document.querySelector("#getPrice1").innerText) ;
+      var minus1Btn = document.querySelector("#minus1");
+
+      var input1 = document.querySelector("#valueChanger1");
+
+      input1.addEventListener("keyup",function(){
+         enterValue("#valueChanger1","#getPrice1",1219);
+         subtotalAndTotal("#subtotal");
+         subtotalAndTotal("#total");
+      }) 
+
+      function enterValue(quantity,unitPrice,dPrice){
+         if (event.keyCode === 13) {
+            let valuePassed = parseFloat( document.querySelector(quantity).value );
+            let updatePrice1 = valuePassed * dPrice;
+            
+            document.querySelector(unitPrice).innerText = updatePrice1;
+         }
+      }
+
+      plus1Btn.addEventListener("click",function(){
+         let quantity = increment1("#valueChanger1");
+         let updatePrice1 = getPrice1 * quantity;
+
+         document.querySelector("#getPrice1").innerText = updatePrice1;
+         subtotalAndTotal("#subtotal");
+         subtotalAndTotal("#total");
+
+      })
+
+      function increment1(quantity){
+         let valueChanger1 = document.querySelector(quantity).value;
+         let valueChanger1Number = parseFloat(valueChanger1);
+         
+         let newValue = valueChanger1Number + 1;
+
+         document.querySelector(quantity).value = newValue;
+         
+         return newValue;
+
+      }
+
+      minus1Btn.addEventListener("click",function(){
+         let quantity = decrement1("#valueChanger1");
+         let updatePrice1 = getPrice1 * quantity;
+
+         document.querySelector("#getPrice1").innerText = updatePrice1;
+         subtotalAndTotal("#subtotal");
+         subtotalAndTotal("#total");
+      })
+
+      function decrement1(quantity){
+         let valueChanger1 = document.querySelector(quantity).value;
+         let valueChanger1Number = parseFloat(valueChanger1);
+         
+         let newValue = valueChanger1Number - 1;
+         if(newValue>=0){
+            document.querySelector(quantity).value = newValue;
+            return newValue;
+         }
+         
+      }
+
+      //iPhone case handler
+      var plus2Btn = document.querySelector("#plus2Btn");
+      var getPrice2 = parseFloat( document.querySelector("#getPrice2").innerText );
+      var minus2Btn = document.querySelector("#minus2Btn");
+      var input2 = document.querySelector("#valueChanger2");
+
+      input2.addEventListener("keyup",function(event){
+         enterValue("#valueChanger2","#getPrice2",59);
+         subtotalAndTotal("#subtotal");
+         subtotalAndTotal("#total");
+      });
+
+      plus2Btn.addEventListener("click",function(){
+         let quantity = increment2("#valueChanger2");
+         let updatePrice2 = getPrice2 * quantity;
+
+         document.querySelector("#getPrice2").innerText = updatePrice2;
+         subtotalAndTotal("#subtotal");
+         subtotalAndTotal("#total");
+      })
+
+      function increment2(quantity){
+         let valueChanger2 = document.querySelector(quantity).value;
+         let valueChanger2Number = parseFloat(valueChanger2);
+
+         let newValue = valueChanger2Number + 1;
+         
+         document.querySelector(quantity).value = newValue;
+         return newValue;
+      }
+
+      minus2Btn.addEventListener("click",function(){
+         let quantity = decrement2("#valueChanger2");
+         let updatePrice2 = getPrice2 * quantity;
+
+         document.querySelector("#getPrice2").innerText = updatePrice2;
+         subtotalAndTotal("#subtotal");
+         subtotalAndTotal("#total");
+      })
+
+      function decrement2(quantity){
+         let valueChanger2 = document.querySelector(quantity).value;
+         let valueChanger2Number = parseFloat(valueChanger2);
+
+         let newValue = valueChanger2Number - 1;
+         if(newValue>=0){
+            document.querySelector(quantity).value = newValue;
+            return newValue;
+         }
+      }
+
+      //subtotal & total function
+      function subtotalAndTotal(id){
+         document.querySelector(id).innerText = sumUp("#getPrice1","#getPrice2"); 
+      }
+
+      function sumUp(product1,product2){
+         let phn = parseFloat( document.querySelector(product1).innerText );
+         let casing = parseFloat( document.querySelector(product2).innerText );
+
+         let subtotal = phn + casing ;
+         
+         return subtotal; 
+      }
+
+      // remove item event handler
+
+      var item1 = document.querySelector("#item1");
+      var item2 = document.querySelector("#item2");
+
+      item1.addEventListener("click",function(){
+         let cart1 = document.querySelector("#cart1");
+         cart1.style.display = "none";
+      });
+
+      item2.addEventListener("click",function(){
+         let cart2 = document.querySelector("#cart2");
+         cart2.style.display = "none"
+      });
+
+   </script>
+
+</body>
+
+</html>
